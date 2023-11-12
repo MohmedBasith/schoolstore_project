@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block metadescription %}
+        {{course.description | truncatewords:155}}
+{% endblock %}
+
+{% block title %}
+    {% if department %}
+        {{course.name}} - ABC Store
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="row my_prod_row_class">
+    <div class="mx_auto">
+        <p><a href="{% url 'schoolstore_app:allCourse' %}">Home</a> | <a href="{{course.department.get_url}}">{{course.department}}</a> | {{course.name}} </p>
+    </div>
+<div class="container">
+    <br>
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
+            <div style="min-width:18rem;">
+            <img src="{{course.image.url}}" alt="{{course.name}}" width="300px" height="350px">
+        </div>
+    </div>
+
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+            <div>
+            <h1 class="my_prod_title">{{course.name}}</h1>
+                <h6 class="my_prod_title">Duration: {{course.duration}}</h6>
+            <h6 class="my_prod_title">Department: {{course.department}}</h6>
+
+            <p class="my_title">Course Description</p>
+            <p class="text-justify my_prod_text">{{course.description}}</p>
+            {% if course.stock <= 0 %}
+            <p class="text-justify my_prod_text"><b>out of stock</b></p>
+            {% else %}
+            {% endif %}
+        </div>
+    </div>
+    </div>
+</div>
+</div>
+{%  endblock %}

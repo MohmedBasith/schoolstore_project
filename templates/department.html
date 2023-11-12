@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block metadescription %}
+    {% if department %}
+    {{department.description|truncatewords:155}}
+    {% else %}
+    Welcome to school Store where you can buy different items....
+    {% endif %}
+{% endblock %}
+
+{% block title %}
+    {% if department %}
+    {{department.name}}
+    {% else %}
+    See our new Collections
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+
+{% if department %}
+    <div>
+        <div class="row my_row_class">
+            <div class="mx-auto">
+            <p><a href="{% url 'schoolstore_app:allCourse' %}">Our Product Collections</a></p>
+        </div>
+        </div>
+    </div>
+{% endif %}
+
+<div class="mx-auto">
+    {% if department %}
+    <img class="my_image" src="{{department.image.url}}" alt="{{department.name}}">
+</div>
+    <br>
+<div>
+    <h1 class="text-center my_title">{{department.name}}</h1>
+    <p class="text-justify">{{department.description}}</p>
+</div>
+    {% else %}
+<div>
+    <h1 class="text_center my_title">Our Products Collections</h1>
+    <p class="text-justify">hamne vajklhjsxbh dehjsdnhnjijnknkjn. gwhjsidcvdbwqhuibdshjicbdhsjicbndjksibxnj bnxkcbxnmkcbnjkdnbnbfdfghjkjhgfdscvbnbvcxcvbnbvcvbnmnbvcxzxcvbnmnbvcxcvbnmnbvc          hghujikdjsuhybduddjiubyvtyujuhygttyui</p>
+</div>
+{% endif %}
+
+<div class="container">
+    <div class="row mx-auto">
+        {% for course in courses.object_list %}
+        <div class="my_bottom_margin col-9 col-sm-12 col-md-4 col-lg-4">
+            <div class="card text center">
+                <a href="{{course.get_url}}"style="height:350px; width:350px"><img class="card-img-top my_image" src="{{course.image.url}}" alt="{{course.name}}" style="height:250px; width:338px"></a>
+                <div class="body-body">
+                    <h4>{{courses.name}}</h4>
+                    <p>{{courses.price}}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="mx-auto">
+        {% if courses.paginator.num_pages > 1 %}
+        <hr>
+        <div class="text-center">
+            {% for pg in courses.paginator.page_range %}
+                <a href="?page={{pg}}" class="btn btn-light btn-sm {% if courses.number == pg %} active {% endif %}">{{pg}}</a>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    <br>
+</div>
+
+{% endblock %}
